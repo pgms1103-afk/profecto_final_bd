@@ -1,0 +1,131 @@
+CREATE DATABASE campana_politica;
+USE campana_politica;
+
+#Zona morada:
+CREATE TABLE partido_politico(
+id_partido INT PRIMARY KEY AUTO_INCREMENT,
+nit_partido VARCHAR(50) NOT NULL UNIQUE,
+nombre_partido VARCHAR(100) NOT NULL UNIQUE,
+sigla VARCHAR(20) NOT NULL,
+personeria_juridica_cne VARCHAR(50) NOT NULL UNIQUE, 
+representante_legal VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE campania(
+id_campania INT PRIMARY KEY AUTO_INCREMENT,
+codigo_cne VARCHAR(50) NOT NULL UNIQUE,
+nombre_campania VARCHAR(120) NOT NULL,
+corporacion_cargo VARCHAR(50) NOT NULL,
+modalidad_eleccion VARCHAR(50) NOT NULL, 
+circunscripcion VARCHAR(40) NOT NULL,
+fecha_inicio DATE NOT NULL,
+fecha_fin DATE NOT NULL,
+tope_gastos_global DECIMAL(15,2) NOT NULL, CHECK (tope_gastos_global>0),
+estado_campania VARCHAR(40) NOT NULL, 
+id_partido INT,
+FOREIGN KEY (id_partido) REFERENCES partido_politico (id_partido)
+);
+
+CREATE TABLE candidato(
+id_candidato INT PRIMARY KEY AUTO_INCREMENT,
+documento VARCHAR(20) NOT NULL UNIQUE,
+nombre VARCHAR(100) NOT NULL,
+appelido VARCHAR(100) NOT NULL,
+correo VARCHAR(100) NOT NULL UNIQUE,
+telefono VARCHAR(20) NOT NULL,
+profesion VARCHAR(80) NOT NULL
+);
+
+CREATE TABLE candidatura (
+id_candidatura INT AUTO_INCREMENT PRIMARY KEY,
+id_campania INT NOT NULL,
+id_candidato INT NOT NULL,
+rol_en_campania VARCHAR(45) NOT NULL,
+numero_renglon INT,
+tope_gasto_individual DECIMAL(15,2) NOT NULL,
+fecha_inscripcion DATE NOT NULL,
+fecha_retiro DATE,
+estado_postulacion VARCHAR(30) NOT NULL,
+votos_individuales INT DEFAULT 0,
+UNIQUE (id_campania, id_candidato),
+FOREIGN KEY (id_campania) REFERENCES CAMPANiA(id_campania),
+FOREIGN KEY (id_candidato) REFERENCES CANDIDATO(id_candidato)
+);
+
+
+CREATE TABLE zona(
+id_zona INT PRIMARY KEY AUTO_INCREMENT,
+codigo_dane VARCHAR(20) NOT NULL UNIQUE,
+nombre_municipio VARCHAR(80) NOT NULL,
+departamento VARCHAR(80) NOT NULL,
+censo_electoral INT NOT NULL CHECK(censo_electoral > 0)
+);
+
+CREATE TABLE campania_zona (
+id_campania INT NOT NULL,
+id_zona INT NOT NULL,    
+fecha_asignacion DATE NOT NULL,
+estado_cobertura VARCHAR(30) NOT NULL,
+PRIMARY KEY (id_campania, id_zona),
+FOREIGN KEY (id_campania) REFERENCES campania(id_campania),
+FOREIGN KEY (id_zona) REFERENCES zona(id_zona)
+);
+
+
+#Zona azul oscuro:
+CREATE TABLE donante(
+id_donante INT PRIMARY KEY AUTO_INCREMENT,
+documento_o_nit VARCHAR(50) NOT NULL UNIQUE,
+nombre_o_razon_social VARCHAR(120) NOT NULL,
+tipo_persona VARCHAR(30) NOT NULL,
+telefono VARCHAR(20) NOT NULL,
+correo VARCHAR(100) NOT NULL,
+direccion VARCHAR(150) NOT NULL
+);
+
+CREATE TABLE donacion(
+id_donacion INT PRIMARY KEY AUTO_INCREMENT,
+fecha_donacion DATE NOT NULL,
+monto DECIMAL (15,2) NOT NULL CHECK(monto > 0),
+tipo_aporte VARCHAR(30) NOT NULL,
+medio_pago VARCHAR(40) NOT NULL,
+numero_recibo_oficial VARCHAR(40) NOT NULL UNIQUE,
+id_donante INT,
+id_campania INT,
+FOREIGN KEY (id_donante) REFERENCES donante (id_donante),
+FOREIGN KEY (id_campania) REFERENCES campania (id_campania)
+);
+
+#Zona naranja:
+CREATE TABLE proveedor(
+id_proveedor INT PRIMARY KEY AUTO_INCREMENT,
+documento_o_nit VARCHAR(20) NOT NULL UNIQUE,
+razon_social VARCHAR(120) NOT NULL,
+tipo_servicio VARCHAR(60) NOT NULL,
+telefono VARCHAR(20) NOT NULL,
+correo VARCHAR(100) NOT NULL,
+direccion VARCHAR(150) NOT NULL
+);
+
+
+#NO CREAR TODABIAAAAAAAAAAAAAA:
+CREATE TABLE gasto(
+id_gasto INT PRIMARY KEY AUTO_INCREMENT,
+numero_factura VARCHAR(40) NOT NULL,
+fecha_gasto DATE NOT NULL,
+categoria_gasto VARCHAR(60) NOT NULL,
+monto DECIMAL(15,2) NOT NULL CHECK(monto > 0),
+descripcion TEXT NOT NULL,
+id_proveedor INT,
+id_campania INT,
+id_candidatura INT,
+id_evento INT,
+id_auditor INT,
+FOREIGN KEY (proveedor) REFERENCES  proveedor (id_proveedor),
+FOREIGN KEY (campania) REFERENCES campania (id_campania),
+FOREIGN KEY (candidatura) REFERENCES candidatura (id_candidatura),
+FOREIGN KEY (evento) REFERENCES evento (id_evento)
+#Todabia no esta creada esa tabla:
+#FOREIGN KEY (auditor_financiero) REFERENCES auditor_financiero (id_miembro)
+);
+
