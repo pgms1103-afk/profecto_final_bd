@@ -96,6 +96,47 @@ FOREIGN KEY (id_donante) REFERENCES donante (id_donante),
 FOREIGN KEY (id_campania) REFERENCES campania (id_campania)
 );
 
+
+#Zona verde:
+CREATE TABLE evento(
+id_evento INT PRIMARY KEY AUTO_INCREMENT,
+nombre_evento VARCHAR(80) NOT NULL,
+tipo_evento VARCHAR(50) NOT NULL,
+fecha_evento DATE NOT NULL,
+hora_evento TIME NOT NULL,
+lugar_evento VARCHAR(150) NOT NULL,
+aforo_estimado INT NOT NULL CHECK(aforo_estimado >= 0),
+id_campania INT NOT NULL,
+id_zona INT NOT NULL,
+id_coordinador_territorial INT NOT NULL,
+FOREIGN KEY (id_campania) REFERENCES campania (id_campania),
+FOREIGN KEY (id_zona) REFERENCES zona (id_zona),
+FOREIGN KEY (id_coordinador_territorial) REFERENCES coordinador_territoral (id_miembro)
+);
+
+CREATE TABLE voluntario (
+id_voluntario INT PRIMARY KEY AUTO_INCREMENT,
+documento VARCHAR(20) NOT NULL UNIQUE,
+nombre VARCHAR(80) NOT NULL,
+apellido VARCHAR(80) NOT NULL,
+fecha_nacimiento DATE NOT NULL,
+telefono VARCHAR(20) NOT NULL,
+correo VARCHAR(100) NOT NULL,
+ocupacion VARCHAR(80) NOT NULL
+);
+
+CREATE TABLE participacion(
+id_participacion INT PRIMARY KEY AUTO_INCREMENT,
+id_voluntario INT NOT NULL,
+id_evento INT NOT NULL,
+rol_asignado VARCHAR(60) NOT NULL,
+hora_aportada DECIMAL(5,2) NOT NULL CHECK (hora_aportada > 0),
+estado_asistencia VARCHAR(25) NOT NULL,
+UNIQUE (id_voluntario, id_evento),
+FOREIGN KEY (id_voluntario) REFERENCES voluntario (id_voluntario),
+FOREIGN KEY (id_evento) REFERENCES evento (id_evento)
+);
+
 #Zona naranja:
 CREATE TABLE proveedor(
 id_proveedor INT PRIMARY KEY AUTO_INCREMENT,
@@ -107,8 +148,6 @@ correo VARCHAR(100) NOT NULL,
 direccion VARCHAR(150) NOT NULL
 );
 
-
-#NO CREAR TODABIAAAAAAAAAAAAAA:
 CREATE TABLE gasto(
 id_gasto INT PRIMARY KEY AUTO_INCREMENT,
 numero_factura VARCHAR(40) NOT NULL,
@@ -121,11 +160,73 @@ id_campania INT,
 id_candidatura INT,
 id_evento INT,
 id_auditor INT,
-FOREIGN KEY (proveedor) REFERENCES  proveedor (id_proveedor),
-FOREIGN KEY (campania) REFERENCES campania (id_campania),
-FOREIGN KEY (candidatura) REFERENCES candidatura (id_candidatura),
-FOREIGN KEY (evento) REFERENCES evento (id_evento)
-#Todabia no esta creada esa tabla:
-#FOREIGN KEY (auditor_financiero) REFERENCES auditor_financiero (id_miembro)
+FOREIGN KEY (id_proveedor) REFERENCES  proveedor (id_proveedor),
+FOREIGN KEY (id_campania) REFERENCES campania (id_campania),
+FOREIGN KEY (id_candidatura) REFERENCES candidatura (id_candidatura),
+FOREIGN KEY (id_evento) REFERENCES evento (id_evento)
 );
 
+#Zona roja
+CREATE TABLE SOPORTE_CONTABLE (
+id_gasto INT NOT NULL,
+id_soporte INT NOT NULL,
+numero_radicado_cne VARCHAR(50) NOT NULL UNIQUE,
+tipo_comprobante VARCHAR(50) NOT NULL,
+fecha_radicado DATE NOT NULL,
+url_archivo_soporte VARCHAR(255) NOT NULL,
+valor_respaldado DECIMAL(15,2) NOT NULL CHECK (valor_respaldado > 0),
+PRIMARY KEY (id_gasto, id_soporte),
+FOREIGN KEY (id_gasto) REFERENCES GASTO(id_gasto)
+);
+
+#Zona azul clarita
+CREATE TABLE equipo_campania(
+id_miembro INT PRIMARY KEY AUTO_INCREMENT,
+documento VARCHAR(20) NOT NULL UNIQUE, 
+nombre VARCHAR(80) NOT NULL,
+apellido VARCHAR(80) NOT NULL,
+correo VARCHAR(100) NOT NULL UNIQUE,
+telefono VARCHAR(20) NOT NULL,
+fecha_vinculacion DATE NOT NULL,
+id_campania INT NOT NULL,
+FOREIGN KEY (id_campania) REFERENCES campania (id_campania)
+);
+
+CREATE TABLE jefe_comunicaciones(
+id_miembro INT PRIMARY KEY,
+enfoque_principal TEXT NOT NULL,
+plataforma_gestion TEXT NOT NULL,
+FOREIGN KEY (id_miembro) REFERENCES equipo_campania(id_miembro)
+);
+
+CREATE TABLE auditor_financiero(
+id_miembro INT PRIMARY KEY,
+tarjeta_profesional VARCHAR(30) NOT NULL UNIQUE,
+registro_junta_central VARCHAR(40) NOT NULL,
+fecha_resolucion_cne DATE NOT NULL,
+FOREIGN KEY (id_miembro) REFERENCES equipo_campania(id_miembro)
+);
+
+CREATE TABLE coordinador_territoral(
+id_miembro INT PRIMARY KEY,
+id_zona INT NOT NULL,
+linea_emergencia VARCHAR(20) NOT NULL,
+presupuesto_caja_menor DECIMAL(15,2) NOT NULL CHECK(presupuesto_caja_menor >= 0),
+FOREIGN KEY (id_miembro) REFERENCES equipo_campania (id_miembro),
+FOREIGN KEY (id_zona) REFERENCES zona(id_zona)
+);
+
+CREATE TABLE contrato(
+id_evento INT NOT NULL,
+id_proveedor INT NOT NULL,
+fecha_contrato DATE NOT NULL,
+descripcion_servicio VARCHAR(100) NOT NULL,
+costo_pactado DECIMAL(15,2) NOT NULL CHECK (costo_pactado > 0),
+estado_contrato VARCHAR(25) NOT NULL,
+hora_isntalacion TIME NOT NULL,
+PRIMARY KEY(id_evento, id_proveedor),
+FOREIGN KEY( id_evento) REFERENCES evento (id_evento),
+FOREIGN KEY (id_proveedor) REFERENCES proveedor (id_proveedor)
+);
+
+SHOW TABLES;
