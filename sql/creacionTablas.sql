@@ -316,3 +316,5 @@ CREATE TABLE soporte_contable (
 );
 
 SHOW TABLES;
+
+ALTER TABLE tipo_aporte MODIFY nombre_tipo_aporte VARCHAR(100) NOT NULL;
