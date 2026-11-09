@@ -63,7 +63,7 @@ CREATE TABLE donante (
 -- 6. TIPO_APORTE (Zona azul oscuro - Catalogo 3FN)
 CREATE TABLE tipo_aporte (
     id_tipo_aporte INT PRIMARY KEY AUTO_INCREMENT,
-    nombre_tipo_aporte VARCHAR(30) NOT NULL
+    nombre_tipo_aporte VARCHAR(100) NOT NULL
 );
 
 -- 7. MEDIO_PAGO (Zona azul oscuro - Catalogo 3FN)
