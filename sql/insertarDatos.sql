@@ -216,6 +216,8 @@ INSERT INTO candidatura (id_campania, id_candidato, rol_en_campania, numero_tarj
 (9, 12, 'Titular Unico', 1, 2800000000.00, '2026-02-01', NULL, 'Vigente', 0),
 (10, 13, 'Titular Unico', 1, 4100000000.00, '2026-02-01', NULL, 'Vigente', 0);
 
+SELECT * FROM candidatura;
+
 -- 14. CAMPANIA_ZONA (16 registros)
 INSERT INTO campania_zona (id_campania, id_zona, fecha_apertura, estado_cobertura) VALUES
 (1, 1, '2026-01-16', 'Activa Prioritaria'),
@@ -234,6 +236,7 @@ INSERT INTO campania_zona (id_campania, id_zona, fecha_apertura, estado_cobertur
 (8, 2, '2026-02-02', 'Activa Prioritaria'),
 (9, 3, '2026-02-03', 'Activa Prioritaria'),
 (10, 5, '2026-02-03', 'Activa Prioritaria');
+SELECT * FROM campania_zona;
 
 -- 15. DONACION (15 registros: IDs 1 al 15)
 INSERT INTO donacion (fecha_donacion, monto, id_tipo_aporte, id_medio_pago, numero_recibo_oficial, id_donante, id_campania) VALUES
@@ -252,10 +255,12 @@ INSERT INTO donacion (fecha_donacion, monto, id_tipo_aporte, id_medio_pago, nume
 ('2026-02-25', 140000000.00, 2, 1, 'REC-CNE-2026-0013', 5, 9),
 ('2026-03-01', 68000000.00, 1, 2, 'REC-CNE-2026-0014', 8, 9),
 ('2026-03-05', 160000000.00, 2, 10, 'REC-CNE-2026-0015', 11, 10);
+SELECT * FROM donacion;
+
 
 -- 16. EQUIPO_CAMPANIA (32 registros: IDs 1..10 Jefes Comunicacion, 11..20 Auditores, 21..32 Coordinadores Territoriales)
 INSERT INTO equipo_campania (documento, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, correo, telefono, fecha_vinculacion, id_campania) VALUES
--- IDs 1 al 10: Jefes de Comunicacion (Campanas 1 a 10)
+-- IDs 1 al 10: Jefes de Comunicacion
 ('79100001', 'Daniel', 'Felipe', 'Samper', 'Ospina', 'daniel.samper@equipo.co', '3101000001', '2026-01-15', 1),
 ('79100002', 'Catalina', 'Maria', 'Gomez', 'Sanchez', 'catalina.gomez@equipo.co', '3101000002', '2026-01-15', 2),
 ('79100003', 'Ricardo', 'Jorge', 'Silva', 'Romero', 'ricardo.silva@equipo.co', '3101000003', '2025-12-08', 3),
@@ -266,7 +271,7 @@ INSERT INTO equipo_campania (documento, primer_nombre, segundo_nombre, primer_ap
 ('79100008', 'Veronica', 'Lucia', 'Orozco', 'Aristizabal', 'veronica.orozco@equipo.co', '3101000008', '2026-02-01', 8),
 ('79100009', 'Hernan', 'Dario', 'Pelaez', 'Restrepo', 'hernan.pelaez@equipo.co', '3101000009', '2026-02-01', 9),
 ('79100010', 'Silvia', 'Fernanda', 'Galvis', 'Serrano', 'silvia.galvis@equipo.co', '3101000010', '2026-02-01', 10),
--- IDs 11 al 20: Auditores Financieros (Campanas 1 a 10)
+-- IDs 11 al 20: Auditores Financieros 
 ('79200011', 'Hector', 'Julio', 'Pinzon', 'Monroy', 'hector.pinzon@auditoria.co', '3112000011', '2026-01-15', 1),
 ('79200012', 'Gloria', 'Amparo', 'Cardenas', 'Nieto', 'gloria.cardenas@auditoria.co', '3112000012', '2026-01-15', 2),
 ('79200013', 'Alvaro', 'Enrique', 'Becerra', 'Cruz', 'alvaro.becerra@auditoria.co', '3112000013', '2025-12-08', 3),
@@ -277,7 +282,7 @@ INSERT INTO equipo_campania (documento, primer_nombre, segundo_nombre, primer_ap
 ('79200018', 'Beatriz', 'Elena', 'Arango', 'Mesa', 'beatriz.arango@auditoria.co', '3112000018', '2026-02-01', 8),
 ('79200019', 'Jaime', 'Alberto', 'Caicedo', 'Lourido', 'jaime.caicedo@auditoria.co', '3112000019', '2026-02-01', 9),
 ('79200020', 'Sonia', 'Esperanza', 'Rueda', 'Mantilla', 'sonia.rueda@auditoria.co', '3112000020', '2026-02-01', 10),
--- IDs 21 al 32: Coordinadores Territoriales (Cada uno en la campana exacta de sus eventos)
+-- IDs 21 al 32: Coordinadores Territoriales
 ('79300021', 'Javier', 'Orlando', 'Triana', 'Camacho', 'javier.triana@territorio.co', '3123000021', '2026-01-16', 1),
 ('79300022', 'Monica', 'Alejandra', 'Betancur', 'Hincapie', 'monica.betancur@territorio.co', '3123000022', '2026-01-18', 1),
 ('79300023', 'Carlos', 'Humberto', 'Sinisterra', 'Mina', 'carlos.sinisterra@territorio.co', '3123000023', '2026-01-17', 2),
@@ -290,12 +295,14 @@ INSERT INTO equipo_campania (documento, primer_nombre, segundo_nombre, primer_ap
 ('79300030', 'William', 'Rene', 'Carvajal', 'Jaimes', 'william.carvajal@territorio.co', '3123000030', '2026-02-02', 8),
 ('79300031', 'Adriana', 'Lucia', 'Vallecilla', 'Hurtado', 'adriana.vallecilla@territorio.co', '3123000031', '2026-02-03', 9),
 ('79300032', 'Gustavo', 'Adolfo', 'Serrano', 'Pinilla', 'gustavo.serrano@territorio.co', '3123000032', '2026-02-03', 10);
+SELECT * FROM equipo_campania;
 
 -- =============================================================================
 -- NIVEL 4: INSERCION EN SUBCLASES DE EQUIPO_CAMPANIA
 -- =============================================================================
 
 -- 17. JEFE_COMUNICACION (10 registros: IDs 1 al 10)
+SELECT * FROM jefe_comunicacion;
 INSERT INTO jefe_comunicacion (id_miembro, enfoque_principal, plataforma_gestion) VALUES
 (1, 'Debates televisivos y relacionamiento con prensa nacional', 'Hootsuite Enterprise y Sala de Prensa CNE'),
 (2, 'Movilizacion juvenil y narrativa ambiental en video corto', 'Meta Business Suite y TikTok Ads Manager'),
@@ -309,6 +316,7 @@ INSERT INTO jefe_comunicacion (id_miembro, enfoque_principal, plataforma_gestion
 (10, 'Desarrollo empresarial y competitividad santandereana', 'LinkedIn Campaign Manager y Meta Suite');
 
 -- 18. AUDITOR_FINANCIERO (10 registros: IDs 11 al 20)
+SELECT * FROM auditor_financiero;
 INSERT INTO auditor_financiero (id_miembro, tarjeta_profesional, registro_junta_central, fecha_resolucion_cne) VALUES
 (11, 'TP-45101-T', 'JCC-REG-2018-0101', '2026-01-14'),
 (12, 'TP-45102-T', 'JCC-REG-2019-0102', '2026-01-14'),
@@ -322,6 +330,7 @@ INSERT INTO auditor_financiero (id_miembro, tarjeta_profesional, registro_junta_
 (20, 'TP-45110-T', 'JCC-REG-2023-0110', '2026-01-31');
 
 -- 19. COORDINADOR_TERRITORIAL (12 registros: IDs 21 al 32, coincidiendo 1:1 con zona y campana)
+SELECT * FROM coordinador_territorial;
 INSERT INTO coordinador_territorial (id_miembro, id_zona, linea_emergencia, presupuesto_caja_menor) VALUES
 (21, 1, '3159000021', 15000000.00),
 (22, 2, '3159000022', 12000000.00),
@@ -341,6 +350,7 @@ INSERT INTO coordinador_territorial (id_miembro, id_zona, linea_emergencia, pres
 -- =============================================================================
 
 -- 20. EVENTO (15 registros: IDs 1 al 15; cada coordinador pertenece a la misma campana y zona del evento)
+SELECT * FROM evento;
 INSERT INTO evento (nombre_evento, tipo_evento, fecha_evento, hora_evento, lugar_evento, aforo_estimado, id_campania, id_zona, id_coordinador_territorial) VALUES
 ('Gran Lanzamiento Presidencial Plaza de Bolivar', 'Mitin Masivo', '2026-02-10', '16:00:00', 'Plaza de Bolivar Carrera 7 # 11-10', 12000, 1, 1, 21),
 ('Encuentro Ciudadano por la Industria Antioquena', 'Foro Programatico', '2026-02-18', '18:00:00', 'Centro de Convenciones Plaza Mayor', 3500, 1, 2, 22),
@@ -363,6 +373,7 @@ INSERT INTO evento (nombre_evento, tipo_evento, fecha_evento, hora_evento, lugar
 -- =============================================================================
 
 -- 21. PARTICIPACION (15 registros: IDs 1 al 15)
+SELECT * FROM participacion;
 INSERT INTO participacion (id_voluntario, id_evento, rol_asignado, hora_aportada, estado_asistencia) VALUES
 (1, 1, 'Coordinador de Logistica de Acceso', 8.50, 'Asistio'),
 (2, 1, 'Registro Digital de Asistentes', 6.00, 'Asistio'),
@@ -381,6 +392,7 @@ INSERT INTO participacion (id_voluntario, id_evento, rol_asignado, hora_aportada
 (15, 15, 'Capacitador de Formulario E-14', 8.00, 'Asistio');
 
 -- 22. CONTRATO (15 registros)
+SELECT * FROM contrato;
 INSERT INTO contrato (id_evento, id_proveedor, fecha_contrato, descripcion_servicio, costo_pactado, estado_contrato, hora_instalacion) VALUES
 (1, 2, '2026-02-01', 'Alquiler de tarima principal, sonido line array y pantallas LED', 68000000.00, 'Ejecutado', '06:00:00'),
 (1, 9, '2026-02-02', 'Esquema de logistica, vallas de contencion y personal de filtro', 22000000.00, 'Ejecutado', '07:00:00'),
@@ -399,6 +411,7 @@ INSERT INTO contrato (id_evento, id_proveedor, fecha_contrato, descripcion_servi
 (15, 1, '2026-04-15', 'Impresion de 1500 cartillas de capacitacion para testigos electorales', 11200000.00, 'Ejecutado', '07:30:00');
 
 -- 23. GASTO (15 registros: IDs 1 al 15; conciliados 1:1 con contratos, vigencias de campana y auditores de su misma campana)
+SELECT * FROM gasto;
 INSERT INTO gasto (numero_factura, fecha_gasto, id_categoria_gasto, monto, descripcion, id_proveedor, id_campania, id_candidatura, id_evento, id_auditor) VALUES
 ('FE-PRO-2026-001', '2026-02-11', 2, 68000000.00, 'Pago de produccion de tarima y sonido para lanzamiento presidencial en Bogota', 2, 1, 1, 1, 11),
 ('FE-SEG-2026-002', '2026-02-14', 2, 22000000.00, 'Servicio de logistica y filtro de seguridad evento Plaza de Bolivar', 9, 1, 1, 1, 11),
@@ -421,6 +434,7 @@ INSERT INTO gasto (numero_factura, fecha_gasto, id_categoria_gasto, monto, descr
 -- =============================================================================
 
 -- 24. SOPORTE_CONTABLE (15 registros: respaldando el 100% de cada factura de gasto)
+SELECT * FROM soporte_contable;
 INSERT INTO soporte_contable (id_gasto, id_soporte, valor_respaldado) VALUES
 (1, 1, 68000000.00),
 (2, 2, 22000000.00),
@@ -437,3 +451,12 @@ INSERT INTO soporte_contable (id_gasto, id_soporte, valor_respaldado) VALUES
 (13, 13, 42000000.00),
 (14, 14, 15400000.00),
 (15, 15, 11200000.00);
+
+SET FOREIGN_KEY_CHECKS = 0;
+TRUNCATE TABLE gasto;
+TRUNCATE TABLE soporte_contable;
+SET FOREIGN_KEY_CHECKS = 1;
+
+
+
+
